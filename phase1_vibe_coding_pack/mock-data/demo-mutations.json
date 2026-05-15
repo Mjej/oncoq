@@ -1,0 +1,57 @@
+[
+  {
+    "id": "mut-001",
+    "gene": "EGFR",
+    "mutation": "L858R",
+    "cancerType": "Lung adenocarcinoma",
+    "pathway": "EGFR/ERBB signalling",
+    "mutationCategory": "driver",
+    "evidenceLevel": "Strong",
+    "relevanceScore": 94,
+    "interpretation": "EGFR L858R is a well-known oncogenic driver mutation in lung adenocarcinoma research and is relevant for targeted therapy investigation."
+  },
+  {
+    "id": "mut-002",
+    "gene": "TP53",
+    "mutation": "R175H",
+    "cancerType": "Lung adenocarcinoma",
+    "pathway": "p53 tumour suppressor pathway",
+    "mutationCategory": "tumor_suppressor",
+    "evidenceLevel": "Strong",
+    "relevanceScore": 88,
+    "interpretation": "TP53 R175H is associated with disrupted tumour suppressor function and may affect genomic stability and cancer progression research."
+  },
+  {
+    "id": "mut-003",
+    "gene": "KRAS",
+    "mutation": "G12D",
+    "cancerType": "Lung adenocarcinoma",
+    "pathway": "RAS/MAPK signalling",
+    "mutationCategory": "driver",
+    "evidenceLevel": "Moderate",
+    "relevanceScore": 82,
+    "interpretation": "KRAS G12D is a driver mutation affecting RAS/MAPK signalling and is relevant for pathway-based drug-repurposing research."
+  },
+  {
+    "id": "mut-004",
+    "gene": "BRCA1",
+    "mutation": "Truncating variant",
+    "cancerType": "Solid tumour research cohort",
+    "pathway": "Homologous recombination DNA repair",
+    "mutationCategory": "dna_repair",
+    "evidenceLevel": "Moderate",
+    "relevanceScore": 79,
+    "interpretation": "BRCA1 loss-of-function variants can affect DNA repair capacity and may support research into DNA damage response vulnerabilities."
+  },
+  {
+    "id": "mut-005",
+    "gene": "ALK",
+    "mutation": "Rearrangement signal",
+    "cancerType": "Lung adenocarcinoma",
+    "pathway": "ALK tyrosine kinase signalling",
+    "mutationCategory": "driver",
+    "evidenceLevel": "Emerging",
+    "relevanceScore": 74,
+    "interpretation": "ALK rearrangement signals may indicate altered kinase signalling and require confirmatory testing in a real research workflow."
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "drug-001",
+    "drugName": "EGFR inhibitor class",
+    "drugClass": "Targeted therapy",
+    "target": "EGFR",
+    "matchedGeneOrPathway": "EGFR/ERBB signalling",
+    "evidenceLevel": "Strong",
+    "aiScore": 93,
+    "quantumInspiredScore": 86,
+    "finalScore": 91,
+    "rationale": "Ranked highly because the dataset contains an EGFR driver mutation and the drug class targets the same oncogenic signalling pathway.",
+    "limitation": "This is a research hypothesis only. Real treatment decisions require clinical confirmation, approved testing, oncologist review, and regulatory-compliant evidence."
+  },
+  {
+    "id": "drug-002",
+    "drugName": "MEK pathway inhibitor class",
+    "drugClass": "MAPK pathway modulator",
+    "target": "MEK/RAS-MAPK pathway",
+    "matchedGeneOrPathway": "RAS/MAPK signalling",
+    "evidenceLevel": "Moderate",
+    "aiScore": 82,
+    "quantumInspiredScore": 78,
+    "finalScore": 80,
+    "rationale": "Ranked because KRAS pathway activation may make downstream MAPK pathway modulation relevant for research investigation.",
+    "limitation": "KRAS biology is complex and drug response is context-dependent. This output requires retrospective validation and expert review."
+  },
+  {
+    "id": "drug-003",
+    "drugName": "PARP inhibitor class",
+    "drugClass": "DNA damage response therapy",
+    "target": "PARP / DNA repair vulnerability",
+    "matchedGeneOrPathway": "Homologous recombination DNA repair",
+    "evidenceLevel": "Moderate",
+    "aiScore": 79,
+    "quantumInspiredScore": 75,
+    "finalScore": 78,
+    "rationale": "Ranked because BRCA1-related DNA repair impairment can create research interest in DNA damage response vulnerabilities.",
+    "limitation": "The mock dataset does not prove homologous recombination deficiency. Additional molecular validation is required."
+  },
+  {
+    "id": "drug-004",
+    "drugName": "ALK inhibitor class",
+    "drugClass": "Kinase inhibitor",
+    "target": "ALK",
+    "matchedGeneOrPathway": "ALK tyrosine kinase signalling",
+    "evidenceLevel": "Emerging",
+    "aiScore": 76,
+    "quantumInspiredScore": 72,
+    "finalScore": 74,
+    "rationale": "Ranked because a possible ALK rearrangement signal appears in the cohort and may warrant confirmatory analysis.",
+    "limitation": "A rearrangement signal must be verified using appropriate sequencing or orthogonal assays before any clinical interpretation."
+  },
+  {
+    "id": "drug-005",
+    "drugName": "p53 pathway reactivation research compounds",
+    "drugClass": "Experimental pathway strategy",
+    "target": "p53 pathway",
+    "matchedGeneOrPathway": "p53 tumour suppressor pathway",
+    "evidenceLevel": "Exploratory",
+    "aiScore": 68,
+    "quantumInspiredScore": 70,
+    "finalScore": 67,
+    "rationale": "Ranked as exploratory because TP53 mutations are biologically important but direct therapeutic reactivation remains challenging and context-specific.",
+    "limitation": "This is not a drug recommendation. It is a low-confidence research direction for discussion only."
+  }
+]
