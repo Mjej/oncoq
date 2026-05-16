@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
+import { TourProvider } from "@/components/tour/tour-provider";
 import { siteMetadata } from "@/lib/seo";
 import "./globals.css";
 
@@ -12,7 +13,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={outfit.variable}>
-        <AppShell>{children}</AppShell>
+        <TourProvider>
+          <AppShell>{children}</AppShell>
+        </TourProvider>
       </body>
     </html>
   );

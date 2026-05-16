@@ -41,10 +41,10 @@ export default function CustomerPilotsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Admin tool · Customer pilots"
+        eyebrow="Admin · Pilot pipeline"
         icon={Briefcase}
-        title="Customer pilot tracker"
-        description="Track research workspace pilots and commercial follow-up separately from the core researcher workflow."
+        title="Pilot pipeline"
+        description="Track research pilots, buyer use cases, commercial stage, and estimated analyst-time savings. Commercial planning only — separate from the core researcher workflow."
         meta={
           <>
             <span>{engagements.length} pilot records</span>
@@ -60,6 +60,13 @@ export default function CustomerPilotsPage() {
           </button>
         }
       />
+
+      <section className="rounded-[22px] border border-[#dbeef8] bg-[#f8fcff] p-4 text-sm text-ink/72">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-tide">Commercial planning boundary</p>
+        <p className="mt-1 leading-6">
+          This tracker supports research-pilot scoping and customer follow-up. It does not contain patient data and does not influence the research workspace or evidence outputs.
+        </p>
+      </section>
 
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <div className="glass-tile rounded-2xl p-4">

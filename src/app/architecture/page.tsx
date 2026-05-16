@@ -2,9 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Activity, ChevronRight, Cpu, Network, RefreshCw } from "lucide-react";
+import { Activity, ChevronRight, Cpu, RefreshCw } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
-import { ArchitectureFlow } from "@/components/architecture-flow";
 import { DataToolbar } from "@/components/data-toolbar";
 import { StatusPill } from "@/components/status-pill";
 import { formatRelative, pipelineRuns, pipelineStages } from "@/data/operations";
@@ -28,10 +27,10 @@ export default function PipelinePage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Admin tool · Operations"
+        eyebrow="Admin · Pipeline operations"
         icon={Activity}
-        title="Pipeline health and run monitoring"
-        description="Use this page only when checking service stages, run logs, and implementation readiness. Researchers can complete the main workflow without coming here."
+        title="Pipeline operations"
+        description="Monitor cohort intake, scoring jobs, evidence ranking, and report exports across the research workflow. Researchers can complete the main workflow without coming here."
         meta={
           <>
             <span>{pipelineStages.filter((stage) => stage.status === "healthy").length}/{pipelineStages.length} stages healthy</span>
@@ -66,7 +65,7 @@ export default function PipelinePage() {
         ))}
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[1.4fr_1fr]">
+      <section>
         <div className="glass-panel rounded-3xl p-5">
           <div className="flex items-center justify-between">
             <div>
@@ -126,18 +125,17 @@ export default function PipelinePage() {
             </table>
           </div>
         </div>
+      </section>
 
-        <div className="glass-panel rounded-3xl p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-tide">Implementation map</p>
-            <Network aria-hidden="true" className="h-4 w-4 text-tide/60" />
-          </div>
-          <h3 className="mt-1 text-lg font-semibold text-ink">Service topology</h3>
-          <div className="mt-4">
-            <ArchitectureFlow />
-          </div>
-          <p className="mt-3 text-xs text-ink/55">5 stages · ingest → annotate → rank → review → report</p>
-        </div>
+      <section className="rounded-[22px] border border-[#dbeef8] bg-white p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-tide">Governance</p>
+        <h3 className="mt-1 text-lg font-semibold text-ink">Research-use guardrails</h3>
+        <ul className="mt-3 grid gap-2 text-sm leading-6 text-ink/68 sm:grid-cols-2">
+          <li className="rounded-2xl border border-[#dbeef8] bg-[#f8fcff] p-3"><strong className="block text-ink">De-identified inputs only</strong>Uploads are validated against the demo mutation schema before scoring.</li>
+          <li className="rounded-2xl border border-[#dbeef8] bg-[#f8fcff] p-3"><strong className="block text-ink">Reviewer states gate export</strong>Only items accepted for report are included in the research brief.</li>
+          <li className="rounded-2xl border border-[#dbeef8] bg-[#f8fcff] p-3"><strong className="block text-ink">Run log retained</strong>Every pipeline run records owner, duration, signals scored, and warnings.</li>
+          <li className="rounded-2xl border border-[#dbeef8] bg-[#f8fcff] p-3"><strong className="block text-ink">Research-use boundary surfaced</strong>Disclaimer rendered on every export and client-facing surface.</li>
+        </ul>
       </section>
     </div>
   );

@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { BarChart3, Play, RefreshCw } from "lucide-react";
+import { BarChart3, Info, Play, RefreshCw, Download } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { BenchmarkChart } from "@/components/benchmark-chart";
 import { DataToolbar } from "@/components/data-toolbar";
 import { StatusPill } from "@/components/status-pill";
+import { metricDefinitions } from "@/lib/content";
 import { cohorts, getBenchmarkSeries } from "@/lib/mock-analysis";
 import { benchmarkRuns as seedBenchmarks, formatRelative, type BenchmarkRun } from "@/data/operations";
 
@@ -61,10 +62,10 @@ export default function BenchmarksPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Admin tool · Retrospective validation"
+        eyebrow="Admin · Retrospective validation"
         icon={BarChart3}
-        title="Retrospective validation runs"
-        description="Queue and review internal benchmark checks after the research workflow is complete. This page does not produce client-facing claims."
+        title="Retrospective validation"
+        description="Compare prototype scoring against baseline or reviewer-labeled benchmarks to assess ranking agreement, pathway consistency, and run stability. Internal validation only — not a clinical claim."
         meta={
           <>
             <span>{runs.length} runs</span>
@@ -74,7 +75,26 @@ export default function BenchmarksPage() {
             <span>{runs.filter((run) => run.status === "queued" || run.status === "running").length} in flight</span>
           </>
         }
+        action={
+          <button className="focus-ring inline-flex items-center gap-2 rounded-xl border border-aqua/30 bg-white/80 px-3 py-2 text-sm font-semibold text-ink/72 hover:border-aqua/55 hover:text-tide" type="button">
+            <Download aria-hidden="true" className="h-4 w-4" /> Export validation memo
+          </button>
+        }
       />
+
+      <section className="rounded-[22px] border border-[#f4d8a7] bg-[#fff8ec] p-4 text-sm text-ink/72">
+        <div className="flex items-start gap-3">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white" style={{ color: "#F4A340" }}>
+            <Info aria-hidden="true" className="h-4 w-4" />
+          </span>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: "#A8721A" }}>Internal retrospective validation</p>
+            <p className="mt-1 leading-6">
+              These checks compare prototype scoring against baseline or reviewer-labeled benchmarks. They do <strong>not</strong> establish clinical validity or replace prospective trials. Use the results for internal review only.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <section className="grid gap-5 xl:grid-cols-[1fr_1.4fr]">
         <div className="glass-panel rounded-3xl p-5">
@@ -112,6 +132,18 @@ export default function BenchmarksPage() {
           <h3 className="mt-1 text-lg font-semibold text-ink">Baseline vs prototype relevance</h3>
           <div className="mt-3">
             <BenchmarkChart data={series} />
+          </div>
+          <div className="mt-4 rounded-2xl border border-[#dbeef8] bg-[#f8fcff] p-3 text-xs leading-6 text-ink/65">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-tide">How to read this chart</p>
+            <p className="mt-1">
+              Baseline is the reviewer-labeled or rule-based ranking. Prototype is the OncoQ.tech relevance score. A positive delta indicates closer agreement on top-ranked mutation signals; a negative delta indicates the prototype diverges from the reviewer reference for that benchmark.
+            </p>
+            <dl className="mt-3 grid gap-1.5 sm:grid-cols-2">
+              <div><dt className="font-semibold text-ink/72">Top-k agreement:</dt> <dd className="inline">{metricDefinitions.topKAgreement}</dd></div>
+              <div><dt className="font-semibold text-ink/72">Pathway consistency:</dt> <dd className="inline">{metricDefinitions.pathwayConsistency}</dd></div>
+              <div><dt className="font-semibold text-ink/72">Evidence agreement:</dt> <dd className="inline">{metricDefinitions.evidenceAgreement}</dd></div>
+              <div><dt className="font-semibold text-ink/72">Run-to-run stability:</dt> <dd className="inline">{metricDefinitions.stability}</dd></div>
+            </dl>
           </div>
         </div>
       </section>

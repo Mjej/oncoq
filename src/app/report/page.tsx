@@ -80,10 +80,10 @@ export default function ReportsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Step 3 · Export report"
+        eyebrow="Step 3 · Research brief export"
         icon={FileText}
-        title="Export research reports"
-        description="Create an evidence-traced research brief with limitations, validation steps, and a clear research-use boundary."
+        title="Research brief export"
+        description="Package reviewed mutation signals, candidate hypothesis classes, limitations, and validation notes into a research-use deliverable."
         meta={<><span>{reports.length} total</span><span>·</span><span>{reports.filter((report) => report.status === "ready").length} ready</span></>}
         action={
           <button className="focus-ring inline-flex items-center gap-2 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white hover:bg-tide" onClick={() => setShowGenerate(true)} type="button">
@@ -93,6 +93,23 @@ export default function ReportsPage() {
       />
 
       <ResearchUseAlert compact />
+
+      <section data-tour="report-export" className="rounded-[22px] border border-[#dbeef8] bg-[#f8fcff] p-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-tide">Export readiness</p>
+            <h2 className="mt-1 text-base font-semibold text-ink">Checks completed before brief export</h2>
+            <p className="mt-1 max-w-2xl text-xs text-ink/55">Each item must be reviewed and accepted before a research brief can be released.</p>
+          </div>
+          <span className="rounded-full border border-[#bfe3d2] bg-[#f3fbf6] px-3 py-1 text-[11px] font-semibold" style={{ color: "#22A06B" }}>Ready to draft</span>
+        </div>
+        <ul className="mt-4 grid gap-2 text-sm leading-6 text-ink/68 sm:grid-cols-2 lg:grid-cols-4">
+          <li className="rounded-2xl border border-[#dbeef8] bg-white p-3"><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-tide">Signals accepted</p><p className="mt-1 font-semibold text-ink">Reviewer-accepted only</p></li>
+          <li className="rounded-2xl border border-[#dbeef8] bg-white p-3"><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-tide">Limitations recorded</p><p className="mt-1 font-semibold text-ink">Unresolved gaps flagged</p></li>
+          <li className="rounded-2xl border border-[#dbeef8] bg-white p-3"><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-tide">Validation notes</p><p className="mt-1 font-semibold text-ink">Retrospective check attached</p></li>
+          <li className="rounded-2xl border border-[#dbeef8] bg-white p-3"><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-tide">Research-use boundary</p><p className="mt-1 font-semibold text-ink">Disclaimer included</p></li>
+        </ul>
+      </section>
 
       <ResearchFlowPanel
         body="Use this step to package reviewed signals and hypotheses into a shareable report. Then open the client portal for read-only review."

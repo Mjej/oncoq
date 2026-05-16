@@ -33,10 +33,10 @@ export default function AnalysisPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Step 1 · Run analysis"
+        eyebrow="Step 1 · Cohort intake & scoring"
         icon={FlaskConical}
-        title="Run a cohort analysis"
-        description="Choose a de-identified cohort, confirm the schema, then run mutation relevance scoring for research review."
+        title="Cohort intake & scoring"
+        description="Upload a de-identified mutation table, validate the schema, then rank mutation signals for expert research review."
         meta={
           <>
             <span>Cohort: <strong className="text-ink">{summary.cohort.cancerType}</strong></span>
@@ -67,12 +67,54 @@ export default function AnalysisPage() {
       <ResearchUseAlert compact />
 
       <ResearchFlowPanel
-        body="This is the first working step for a researcher. Upload or select a cohort, run the analysis, then continue to evidence review."
+        body="Five-step intake: select cohort, validate schema, configure scoring, run, then continue to evidence review."
         currentStep={1}
         nextHref="/results"
         nextLabel="Review evidence"
-        title="Start with cohort scoring"
+        title="Cohort intake & scoring"
       />
+
+      <section data-tour="analysis-stepper" className="rounded-[22px] border border-[#dbeef8] bg-white p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-tide">Intake stepper</p>
+            <h2 className="mt-1 text-base font-semibold text-ink">5-step research workflow</h2>
+          </div>
+          <span className="text-[11px] font-semibold text-ink/55">Research-use only</span>
+        </div>
+        <ol className="mt-4 grid gap-2 sm:grid-cols-5">
+          {[
+            { n: 1, label: "Select cohort", done: true },
+            { n: 2, label: "Validate schema", done: true },
+            { n: 3, label: "Configure scoring", done: true },
+            { n: 4, label: "Run scoring", done: Boolean(runId) },
+            { n: 5, label: "Continue to evidence review", done: false }
+          ].map((step) => (
+            <li className={`rounded-2xl border p-3 ${step.done ? "border-[#bfe3d2] bg-[#f3fbf6]" : "border-[#dbeef8] bg-[#f8fcff]"}`} key={step.n}>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ color: step.done ? "#22A06B" : "#2D9CDB" }}>Step {step.n}</p>
+              <p className="mt-1 text-sm font-semibold text-ink">{step.label}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section data-tour="analysis-validation" className="rounded-[22px] border border-[#dbeef8] bg-white p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-tide">Schema validation</p>
+            <h2 className="mt-1 text-base font-semibold text-ink">Required fields confirmed</h2>
+          </div>
+          <span className="rounded-full border border-[#bfe3d2] bg-[#f3fbf6] px-3 py-1 text-[11px] font-semibold" style={{ color: "#22A06B" }}>Validated</span>
+        </div>
+        <ul className="mt-3 grid gap-2 text-sm leading-6 text-ink/68 sm:grid-cols-2">
+          <li className="flex items-center gap-2"><span aria-hidden="true" className="grid h-5 w-5 place-items-center rounded-full text-white" style={{ background: "#22A06B" }}>✓</span> De-identified rows (no patient identifiers)</li>
+          <li className="flex items-center gap-2"><span aria-hidden="true" className="grid h-5 w-5 place-items-center rounded-full text-white" style={{ background: "#22A06B" }}>✓</span> Gene symbol present (HGNC)</li>
+          <li className="flex items-center gap-2"><span aria-hidden="true" className="grid h-5 w-5 place-items-center rounded-full text-white" style={{ background: "#22A06B" }}>✓</span> Variant notation parseable</li>
+          <li className="flex items-center gap-2"><span aria-hidden="true" className="grid h-5 w-5 place-items-center rounded-full text-white" style={{ background: "#22A06B" }}>✓</span> Pathway annotation mapped</li>
+          <li className="flex items-center gap-2"><span aria-hidden="true" className="grid h-5 w-5 place-items-center rounded-full text-white" style={{ background: "#22A06B" }}>✓</span> Evidence category recognised</li>
+          <li className="flex items-center gap-2"><span aria-hidden="true" className="grid h-5 w-5 place-items-center rounded-full text-white" style={{ background: "#22A06B" }}>✓</span> No prohibited fields detected</li>
+        </ul>
+      </section>
 
       <section className="grid gap-3 md:grid-cols-4">
         <div className="glass-tile rounded-2xl p-4">

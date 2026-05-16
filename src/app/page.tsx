@@ -15,12 +15,11 @@ import {
   Network,
   Search,
   Settings,
-  ShieldCheck,
-  Sparkles,
   Users
 } from "lucide-react";
 import { researchUseDisclaimer } from "@/lib/content";
 import { siteConfig } from "@/lib/seo";
+import { Wordmark } from "@/components/wordmark";
 
 const heroStats = [
   { label: "Cohort files reviewed", value: "3", tone: "#3FB6E0", detail: "De-identified demo datasets", dash: "42 100" },
@@ -59,20 +58,20 @@ const dashboardStages = [
 
 const audienceCards = [
   {
-    title: "Bioinformatics leads",
-    detail: "Reduce manual mutation triage and give each ranked signal a clear evidence trail, pathway context, and review status."
+    title: "Hospitals & precision oncology units",
+    detail: "Defensible mutation review for hospital research teams running de-identified panels under research-use governance."
   },
   {
-    title: "Translational research teams",
-    detail: "Move from raw mutation lists to testable drug-repurposing hypotheses that can be discussed, challenged, and refined."
+    title: "Molecular diagnostic labs",
+    detail: "Structured output for labs that need to share ranked mutation signals and pathway context with R&D collaborators."
   },
   {
-    title: "R&D operators",
-    detail: "Standardise review packets across projects so internal teams can compare opportunities without losing provenance or assumptions."
+    title: "Pharma / biotech R&D",
+    detail: "Early hypothesis-class signal for drug-repurposing teams, tied to mutation evidence and pathway rationale."
   },
   {
-    title: "Pharma partnering teams",
-    detail: "Screen early research opportunities faster by reviewing mutation relevance, pathway fit, and repurposing rationale in one place."
+    title: "Research commercialisation partners",
+    detail: "University commercialisation, translational research offices, and IP-aligned partners running structured pilots."
   }
 ];
 
@@ -170,20 +169,19 @@ export default function LandingPage() {
 
       <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
         <Link className="flex items-center gap-2" href="/">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-ocean text-white">
-            <Sparkles aria-hidden="true" className="h-4 w-4" />
-          </span>
-          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-tide">ONCOQ.TECH</span>
+          <Wordmark size={32} />
+          <span className="sr-only">OncoQ.tech home</span>
         </Link>
         <nav className="hidden items-center gap-7 text-sm font-medium text-ink/62 md:flex">
-          <Link className="hover:text-ink" href="#platform">Platform</Link>
+          <Link className="hover:text-ink" href="#problem">Problem</Link>
+          <Link className="hover:text-ink" href="#solution">Solution</Link>
           <Link className="hover:text-ink" href="#workflow">Workflow</Link>
-          <Link className="hover:text-ink" href="#audience">Use Cases</Link>
-          <Link className="hover:text-ink" href="#evidence">Evidence Model</Link>
+          <Link className="hover:text-ink" href="#audience">Who it&apos;s for</Link>
+          <Link className="hover:text-ink" href="/architecture">Operations</Link>
           <Link className="hover:text-ink" href="/dashboard">Demo</Link>
         </nav>
         <Link className="focus-ring inline-flex items-center gap-2 rounded-full bg-ocean px-5 py-2.5 text-sm font-semibold text-white hover:bg-tide" href="/dashboard">
-          View Demo Workspace
+          View Demo Dashboard
           <ArrowRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </header>
@@ -191,11 +189,7 @@ export default function LandingPage() {
       <main>
         <section className="relative px-6 pb-24 pt-8 sm:pt-12" id="platform">
           <div className="relative z-10 mx-auto max-w-5xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#cde8f5] bg-white/66 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-tide">
-              <ShieldCheck aria-hidden="true" className="h-3.5 w-3.5" />
-              Mutation-to-hypothesis workspace
-            </span>
-            <h1 className="mt-6 text-4xl font-semibold leading-[1.02] tracking-tight text-ink sm:text-6xl md:text-[64px]">
+            <h1 className="text-4xl font-semibold leading-[1.02] tracking-tight text-ink sm:text-6xl md:text-[64px]">
               <span className="block">Turn cancer mutation data</span>
               <span className="block">into evidence-ranked</span>
               <span className="block">drug repurposing</span>
@@ -285,14 +279,85 @@ export default function LandingPage() {
               {researchUseDisclaimer}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link className="focus-ring inline-flex items-center gap-2 rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white hover:bg-tide" href="/analysis">
-                Run Demo Mutation Review
+              <Link className="focus-ring inline-flex items-center gap-2 rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white hover:bg-tide" href="/dashboard">
+                View Demo Dashboard
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              </Link>
+              <Link className="focus-ring inline-flex items-center gap-2 rounded-full border border-[#cde8f5] bg-white/72 px-6 py-3 text-sm font-semibold text-ink/72 hover:text-tide" href="/architecture">
+                View Pipeline Ops
               </Link>
               <Link className="focus-ring inline-flex items-center gap-2 rounded-full border border-[#cde8f5] bg-white/72 px-6 py-3 text-sm font-semibold text-ink/72 hover:text-tide" href="/report">
                 View Evidence Brief
               </Link>
             </div>
+          </div>
+        </section>
+
+        <section className="px-6 py-16" id="problem">
+          <SectionLabel>Problem</SectionLabel>
+          <h2 className="mx-auto mt-6 max-w-3xl text-center text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+            Mutation interpretation in oncology research is slow, fragmented, and hard to translate into action.
+          </h2>
+          <div className="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-3">
+            {[
+              {
+                title: "Complex mutation data",
+                detail: "Turning variant tables into defensible research direction takes manual review across many tools and references."
+              },
+              {
+                title: "Slow, expensive drug repurposing",
+                detail: "Mutation-to-pathway-to-compound hypotheses are missed because the workflow is fragmented."
+              },
+              {
+                title: "No integrated workspace",
+                detail: "Research teams lack a single place that connects mutation, risk modelling, and therapeutic hypothesis with evidence provenance."
+              }
+            ].map((card) => (
+              <div className="rounded-[22px] border border-[#cde8f5] bg-white/66 p-6 backdrop-blur-xl" key={card.title}>
+                <h3 className="text-base font-semibold text-ink">{card.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-ink/58">{card.detail}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="px-6 py-16" id="solution">
+          <SectionLabel>Solution</SectionLabel>
+          <h2 className="mx-auto mt-6 max-w-3xl text-center text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+            Three IP-aligned modules in one research workflow.
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-6 text-ink/55">
+            Powered by UM deep-tech IP: a hybrid AI + quantum-inspired computational approach for mutation detection, cancer risk prediction, and drug repurposing.
+          </p>
+          <div className="mx-auto mt-10 grid max-w-6xl gap-4 md:grid-cols-3">
+            {[
+              {
+                title: "Mutation detection & prioritisation",
+                detail: "Prioritises mutation signals from genomic data using pathway and evidence context.",
+                icon: Microscope
+              },
+              {
+                title: "Cancer risk prediction",
+                detail: "Estimates a research-use cancer risk category from mutation patterns. Not a clinical diagnosis.",
+                icon: FlaskConical
+              },
+              {
+                title: "Drug repurposing recommendation",
+                detail: "Ranks existing drug candidates for repurposing investigation, tied to pathway evidence.",
+                icon: Dna
+              }
+            ].map((card) => {
+              const Icon = card.icon;
+              return (
+                <div className="rounded-[22px] border border-[#cde8f5] bg-white/66 p-6 backdrop-blur-xl" key={card.title}>
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-[#eef8fd] text-tide">
+                    <Icon aria-hidden="true" className="h-4 w-4" />
+                  </span>
+                  <h3 className="mt-4 text-base font-semibold text-ink">{card.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-ink/58">{card.detail}</p>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -364,13 +429,47 @@ export default function LandingPage() {
         </section>
 
         <section className="px-6 py-20">
+          <div className="mx-auto max-w-6xl rounded-[28px] border border-[#cde8f5] bg-white/72 p-10 backdrop-blur-xl">
+            <SectionLabel>Commercial</SectionLabel>
+            <h2 className="mx-auto mt-6 max-w-3xl text-center text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+              A research-use product with multiple aligned revenue lines.
+            </h2>
+            <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {[
+                { title: "B2B research SaaS", detail: "Per-team subscription for hospital and lab research workspaces." },
+                { title: "Hospital / lab pilot package", detail: "Fixed-fee pilot with onboarding, validation support, and review packets." },
+                { title: "Research partnership model", detail: "Co-developed research projects with UM, hospitals, and aligned labs." },
+                { title: "API licensing for pharma", detail: "Structured mutation-to-pathway signal licensed to pharma and diagnostic platforms." }
+              ].map((card) => (
+                <div className="rounded-[22px] border border-[#cde8f5] bg-white/72 p-5" key={card.title}>
+                  <h3 className="text-sm font-semibold text-ink">{card.title}</h3>
+                  <p className="mt-2 text-xs leading-5 text-ink/58">{card.detail}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link className="focus-ring inline-flex items-center gap-2 rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white hover:bg-tide" href="/dashboard">
+                Launch Demo
+                <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              </Link>
+              <Link className="focus-ring inline-flex items-center gap-2 rounded-full border border-[#cde8f5] bg-white/72 px-6 py-3 text-sm font-semibold text-ink/72 hover:text-tide" href="/architecture">
+                View Pipeline Ops
+              </Link>
+              <Link className="focus-ring inline-flex items-center gap-2 rounded-full border border-[#cde8f5] bg-white/72 px-6 py-3 text-sm font-semibold text-ink/72 hover:text-tide" href="/validation">
+                Open Validation Benchmarks
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-6 py-20">
           <div className="mx-auto max-w-5xl rounded-[28px] border border-[#cde8f5] bg-white/68 p-10 text-center backdrop-blur-xl">
             <h2 className="text-3xl font-semibold tracking-tight text-ink sm:text-5xl">See how a mutation table becomes a review-ready oncology hypothesis.</h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-ink/58 sm:text-base">
               Explore a demo cohort, review ranked mutation signals, inspect pathway evidence, and generate a research-use brief with limitations clearly stated.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-              <Link className="focus-ring inline-flex items-center gap-2 rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white hover:bg-tide" href="/dashboard">
+              <Link className="focus-ring inline-flex items-center gap-2 rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white hover:bg-tide" href="/dashboard?tour=1">
                 Open Demo Workspace
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>

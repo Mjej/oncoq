@@ -8,23 +8,26 @@ export function PilotRoiCalculator() {
   const [analysts, setAnalysts] = useState(3);
   const [rate, setRate] = useState(120);
   const [hoursPerCohort, setHoursPerCohort] = useState(60);
+  const [assistedHoursPerCohort, setAssistedHoursPerCohort] = useState(27);
   const [cohortsPerYear, setCohortsPerYear] = useState(8);
   const [customer, setCustomer] = useState("Customer research lab");
   const [cohortName, setCohortName] = useState("Lung adenocarcinoma demo cohort");
 
   const result = useMemo(() => {
     const manualHoursPerYear = analysts * hoursPerCohort * cohortsPerYear;
-    // Phase 2 deterministic value assumption: 55% workflow time saved with OncoQ.tech
-    const savedHours = Math.round(manualHoursPerYear * 0.55);
-    const moneyValue = Math.round(savedHours * rate);
+    const assistedHoursPerYear = analysts * Math.min(assistedHoursPerCohort, hoursPerCohort) * cohortsPerYear;
+    const savedHours = Math.max(0, manualHoursPerYear - assistedHoursPerYear);
+    const manualCost = Math.round(manualHoursPerYear * rate);
+    const assistedCost = Math.round(assistedHoursPerYear * rate);
+    const moneyValue = Math.max(0, manualCost - assistedCost);
     const pilotFee = 50_000;
     const saasFee = 120_000;
     const netVsPilot = moneyValue - pilotFee;
     const netVsSaas = moneyValue - saasFee;
     const paybackMonthsPilot = moneyValue > 0 ? Math.max(1, Math.round((pilotFee / moneyValue) * 12)) : 99;
     const paybackMonthsSaas = moneyValue > 0 ? Math.max(1, Math.round((saasFee / moneyValue) * 12)) : 99;
-    return { manualHoursPerYear, savedHours, moneyValue, netVsPilot, netVsSaas, paybackMonthsPilot, paybackMonthsSaas };
-  }, [analysts, rate, hoursPerCohort, cohortsPerYear]);
+    return { manualHoursPerYear, assistedHoursPerYear, savedHours, manualCost, assistedCost, moneyValue, netVsPilot, netVsSaas, paybackMonthsPilot, paybackMonthsSaas };
+  }, [analysts, rate, hoursPerCohort, assistedHoursPerCohort, cohortsPerYear]);
 
   function handleDownloadSow() {
     const sow = buildPilotSow({
@@ -54,6 +57,7 @@ export function PilotRoiCalculator() {
           <NumberInput label="Bioinformatics analysts" suffix="analysts" min={1} max={50} value={analysts} onChange={setAnalysts} />
           <NumberInput label="Internal analyst rate" suffix="RM / hr" min={50} max={600} value={rate} onChange={setRate} step={10} />
           <NumberInput label="Manual hours per cohort" suffix="hours" min={5} max={400} value={hoursPerCohort} onChange={setHoursPerCohort} step={5} />
+          <NumberInput label="Assisted hours per cohort (with OncoQ.tech)" suffix="hours" min={1} max={hoursPerCohort} value={Math.min(assistedHoursPerCohort, hoursPerCohort)} onChange={setAssistedHoursPerCohort} step={1} />
           <NumberInput label="Cohorts analysed / year" suffix="cohorts" min={1} max={100} value={cohortsPerYear} onChange={setCohortsPerYear} />
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -99,6 +103,17 @@ export function PilotRoiCalculator() {
             <Download aria-hidden="true" className="h-4 w-4" />
             Download draft pilot SOW (.md)
           </button>
+
+          <div className="rounded-2xl border border-[#dbeef8] bg-[#f8fcff] p-4 text-xs leading-6 text-ink/65">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-tide">Assumptions</p>
+            <ul className="mt-2 space-y-1">
+              <li>• Manual baseline: {result.manualHoursPerYear.toLocaleString()} analyst hours / year at RM {rate.toLocaleString()} / hr = RM {result.manualCost.toLocaleString()}.</li>
+              <li>• Assisted with OncoQ.tech: {result.assistedHoursPerYear.toLocaleString()} hours / year = RM {result.assistedCost.toLocaleString()}.</li>
+              <li>• Pilot fee assumed at RM 50,000; SaaS license assumed at RM 120,000 / year.</li>
+              <li>• Estimates are research-pilot scoping only; expert review and validation effort excluded.</li>
+            </ul>
+          </div>
+
           <p className="text-xs leading-5 text-ink/55">
             Draft SOW for discussion only. Final pilot terms subject to mutual agreement. Research-use boundary applies.
           </p>

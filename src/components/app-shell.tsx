@@ -6,26 +6,28 @@ import {
   Activity,
   BarChart3,
   Briefcase,
+  Compass,
   Dna,
   FileText,
   FlaskConical,
   LayoutDashboard,
-  Sparkles,
   Users
 } from "lucide-react";
+import { Wordmark } from "@/components/wordmark";
+import { useTour } from "@/components/tour/tour-provider";
 
 const researchNavigation = [
-  { href: "/dashboard", label: "Overview", description: "Start here", icon: LayoutDashboard, step: "0" },
-  { href: "/analysis", label: "Run analysis", description: "Upload and score", icon: FlaskConical, step: "1" },
-  { href: "/results", label: "Review evidence", description: "Signals and hypotheses", icon: Dna, step: "2" },
-  { href: "/report", label: "Export report", description: "Research brief", icon: FileText, step: "3" },
-  { href: "/client", label: "Share client view", description: "Read-only portal", icon: Users, step: "4" }
+  { href: "/dashboard", label: "Evidence workspace", description: "Active cohort summary", icon: LayoutDashboard, step: "0" },
+  { href: "/analysis", label: "Cohort intake", description: "Validate & score", icon: FlaskConical, step: "1" },
+  { href: "/results", label: "Evidence board", description: "Ranked signals", icon: Dna, step: "2" },
+  { href: "/report", label: "Research brief", description: "Reviewed export", icon: FileText, step: "3" },
+  { href: "/client", label: "Client review", description: "Read-only portal", icon: Users, step: "4" }
 ];
 
 const operationsNavigation = [
-  { href: "/architecture", label: "Operations", description: "Pipeline health", icon: Activity },
-  { href: "/validation", label: "Validation", description: "Retrospective checks", icon: BarChart3 },
-  { href: "/pilot", label: "Pilots", description: "Customer tracking", icon: Briefcase }
+  { href: "/architecture", label: "Pipeline operations", description: "Run monitor & architecture", icon: Activity },
+  { href: "/validation", label: "Retrospective validation", description: "Benchmark checks", icon: BarChart3 },
+  { href: "/pilot", label: "Pilot pipeline", description: "Pilot tracker", icon: Briefcase }
 ];
 
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -39,18 +41,14 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
 
   return (
     <div className="min-h-screen bg-white lg:flex">
-      <aside className="relative border-b border-[#dbeef8] bg-white px-4 py-3 lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:border-b-0 lg:border-r lg:px-5 lg:py-6">
+      <aside data-tour="sidebar" className="relative border-b border-[#dbeef8] bg-white px-4 py-3 lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:border-b-0 lg:border-r lg:px-5 lg:py-6">
 
         <div className="flex items-center justify-between gap-3 lg:block">
         <Link className="focus-ring flex items-center gap-3" href="/">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-ocean text-white lg:h-11 lg:w-11">
-            <Sparkles aria-hidden="true" className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-tide">ONCOQ.TECH</p>
-            <h1 className="text-sm font-semibold text-ink lg:text-base">Workspace</h1>
-          </div>
+          <Wordmark size={22} />
+          <span className="sr-only">OncoQ.tech — Research workspace</span>
         </Link>
+        <p className="mt-1 hidden text-[11px] font-medium text-ink/55 lg:block">Research workspace</p>
 
         <div className="flex items-center gap-2 rounded-2xl border border-[#dbeef8] bg-white p-2 lg:mt-4">
           <div className="flex h-7 w-7 items-center justify-center rounded-full bg-ocean text-[11px] font-semibold text-white">AK</div>
@@ -60,6 +58,8 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
           </div>
         </div>
         </div>
+
+        <TourLauncher />
 
         <nav aria-label="Primary" className="mt-4 space-y-4 lg:mt-6">
           <div>
@@ -92,8 +92,8 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
           </div>
 
           <div>
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink/42">Admin tools</p>
-            <div className="grid grid-cols-3 gap-2 lg:block lg:space-y-1">
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink/42">Operations</p>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:block lg:space-y-1">
               {operationsNavigation.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;
@@ -135,7 +135,38 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
 
       <main className="relative w-full bg-white px-4 py-5 sm:px-6 lg:ml-72 lg:px-10 lg:py-8">
         <div className="mx-auto max-w-7xl">{children}</div>
+        <TourHelpButton />
       </main>
     </div>
+  );
+}
+
+function TourLauncher() {
+  const { start } = useTour();
+  return (
+    <button
+      className="focus-ring mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-aqua/40 bg-gradient-to-r from-[#eef8fd] to-white px-3 py-2 text-xs font-semibold text-tide shadow-sm hover:from-white hover:to-[#eef8fd] lg:mt-4"
+      onClick={start}
+      type="button"
+    >
+      <Compass aria-hidden="true" className="h-3.5 w-3.5" />
+      Take the guided tour
+    </button>
+  );
+}
+
+function TourHelpButton() {
+  const { start, active } = useTour();
+  if (active) return null;
+  return (
+    <button
+      aria-label="Start guided tour"
+      className="focus-ring fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full bg-ocean px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-ocean/25 hover:bg-tide"
+      onClick={start}
+      type="button"
+    >
+      <Compass aria-hidden="true" className="h-4 w-4" />
+      Tour
+    </button>
   );
 }

@@ -5,9 +5,9 @@ import {
   Dna,
   FlaskConical,
   LockKeyhole,
-  ShieldCheck,
   Upload
 } from "lucide-react";
+import { Wordmark } from "@/components/wordmark";
 import { researchUseDisclaimer } from "@/lib/content";
 import { generatedReports, pipelineRuns } from "@/data/operations";
 import { cohorts, getRankedDrugHypotheses, getRankedMutations } from "@/lib/mock-analysis";
@@ -20,9 +20,11 @@ const latestRun = pipelineRuns.find((run) => run.cohortId === clientCohort.id) ?
 
 const clientSteps = [
   { title: "Cohort received", detail: "De-identified mutation file checked against the demo schema.", status: "Complete" },
+  { title: "Schema validated", detail: "Required fields, gene names, and variants confirmed before scoring.", status: "Complete" },
   { title: "Signals ranked", detail: "Mutation relevance signals prepared for research review.", status: "Complete" },
   { title: "Hypotheses drafted", detail: "Candidate drug-repurposing hypotheses include limitations and evidence tags.", status: "In review" },
-  { title: "Report export", detail: "Evidence brief is available for client-side review comments.", status: "Ready" }
+  { title: "Limitations recorded", detail: "Unresolved evidence gaps flagged for retrospective validation.", status: "Pending review" },
+  { title: "Report export", detail: "Evidence brief available for read-only client review.", status: "Ready" }
 ];
 
 function PortalPill({ children }: { children: React.ReactNode }) {
@@ -38,13 +40,8 @@ export default function ClientPortalPage() {
     <main className="min-h-screen bg-white text-ink">
       <header className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5">
         <Link className="flex items-center gap-3" href="/">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-ocean text-white">
-            <ShieldCheck aria-hidden="true" className="h-5 w-5" />
-          </span>
-          <span>
-            <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-tide">OncoQ.tech</span>
-            <span className="block text-sm font-semibold text-ink">Client portal</span>
-          </span>
+          <Wordmark size={24} />
+          <span className="hidden text-[11px] font-medium text-ink/55 sm:inline">Client portal</span>
         </Link>
         <div className="hidden items-center gap-2 rounded-full border border-[#dbeef8] bg-[#f8fcff] px-4 py-2 text-sm font-semibold text-tide md:inline-flex">
           <LockKeyhole aria-hidden="true" className="h-4 w-4" />
